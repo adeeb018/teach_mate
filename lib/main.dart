@@ -1,7 +1,7 @@
-import 'dart:js';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:go_router/go_router.dart';
 import 'package:school_management/constants/constant_strings.dart';
@@ -14,13 +14,16 @@ import 'package:school_management/utils/route/routes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await dotenv.load();
+
   await Firebase.initializeApp(
-      options: const FirebaseOptions(
-          authDomain: "schoolmanagement-5dfac.firebaseapp.com",
-          apiKey: FirebaseConstants.apiKey,
-          appId: FirebaseConstants.appId,
-          messagingSenderId: FirebaseConstants.messagingSenderId,
-          projectId: FirebaseConstants.projectId));
+      options: FirebaseOptions(
+        apiKey: dotenv.env['FIREBASE_API_KEY']!,
+        appId: dotenv.env['FIREBASE_APP_ID']!,
+        messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID']!,
+        projectId: dotenv.env['FIREBASE_PROJECT_ID']!,
+        authDomain: dotenv.env['FIREBASE_AUTH_DOMAIN']!,
+      ));
 
   // disable browser back button
   setUrlStrategy(null);
