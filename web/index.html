@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+      If you are serving your web app in a path other than the root, change the
+      href value below to reflect the base path you are serving from.
+
+      The path provided below has to start and end with a slash "/" in order for
+      it to work correctly.
+
+      For more details:
+      * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+      This is a placeholder for base href that will be replaced by the value of
+      the `--base-href` argument provided to `flutter build`.
+    -->
+    <base href="$FLUTTER_BASE_HREF">
+
+    <meta charset="UTF-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="description" content="A flutter web template.">
+
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="school_management">
+    <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+    <!--    google sign in -->
+    <meta name="google-signin-client_id" content="401058530115-ufddmu24tdbilv9lu48cjih852geqeln.apps.googleusercontent.com" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png"/>
+
+    <title>school_management</title>
+    <link rel="manifest" href="manifest.json">
+
+    <script>
+        // The value below is injected by flutter build, do not touch.
+        const serviceWorkerVersion = null;
+    </script>
+    <!-- This script adds the flutter initialization JS code -->
+    <script src="flutter.js" defer></script>
+
+    <script type="module">
+        const FIREBASE_VERSION = 10.14.1;
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-app.js';
+        // import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-firestore-lite.js';
+        // Follow this pattern to import other Firebase services
+        // import {} from "https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-analytics.js";
+        // import {} from "https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-app-check.js";
+        // import {} from "https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-auth.js";
+        // import {} from "https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-functions.js";
+        // import {} from "https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-firestore.js";
+        // import {} from "https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-storage.js";
+        // import {} from "https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-performance.js";
+        // import {} from "https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-remote-config.js";
+        // import {} from "https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-messaging.js";
+        // import {} from "https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-database.js";
+
+        // TODO: Replace the following with your app's Firebase project configuration
+        const firebaseConfig = {
+      apiKey: "AIzaSyA5S1y8cuOS9-3YbPl8fwB-lEobv5OP4ME",
+      authDomain: "schoolmanagement-5dfac.firebaseapp.com",
+      projectId: "schoolmanagement-5dfac",
+      storageBucket: "schoolmanagement-5dfac.appspot.com",
+      messagingSenderId: "401058530115",
+      appId: "1:401058530115:web:39d83590b5b7124b86e5f6"
+    };
+
+        const app = initializeApp(firebaseConfig);
+<!--        const db = getFirestore(app);-->
+
+<!--        // Get a list of cities from your database-->
+<!--        async function getCities(db) {-->
+<!--        const citiesCol = collection(db, 'cities');-->
+<!--        const citySnapshot = await getDocs(citiesCol);-->
+<!--        const cityList = citySnapshot.docs.map(doc => doc.data());-->
+<!--        return cityList;-->
+<!--        }-->
+    </script>
+</head>
+<body>
+
+<script>
+    window.addEventListener('load', function(ev) {
+      // Download main.dart.js
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
+          });
+        }
+      });
+    });
+</script>
+</body>
+</html>
