@@ -1,11 +1,4 @@
 
-class FirebaseConstants {
-  static const apiKey = "AIzaSyA5S1y8cuOS9-3YbPl8fwB-lEobv5OP4ME";
-  static const appId = "1:401058530115:web:39d83590b5b7124b86e5f6";
-  static const messagingSenderId = "401058530115";
-  static const projectId = "schoolmanagement-5dfac";
-}
-
 class StringConstants {
   static const welcomeText = 'Welcome';
   static const somethingWentWrong = 'Something went wrong';

@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:school_management/bloc/home/appBar/app_bar_bloc.dart';
 import 'package:school_management/constants/constant_strings.dart';
 
+import '../../bloc/home/homepage_bloc.dart';
 import '../../bloc/login/login_bloc.dart';
 import '../../constants/widgets/loading_stack_widget.dart';
 import '../../constants/widgets/scaffold_notification.dart';
@@ -43,6 +45,9 @@ class LoginScreen extends StatelessWidget {
             if (state is LoginFailed) {
               ScaffoldSnackBar.of(context).show(state.error);
             } else if (state is LoginSuccess) {
+              context.read<HomepageBloc>().add(InitialEvent());
+              context.read<AppBarBloc>().add(InitialAppBarEvent());
+
               context.go('/homepage');
               // Navigator.pushReplacement(context, homePageRoute());
             }

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
-class GetXStoreController extends GetxController {
+import '../../models/user_model.dart';
 
+class GetXStoreController extends GetxController {
+  UserModel? userData;
 }

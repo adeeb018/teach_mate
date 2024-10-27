@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
+import 'package:school_management/bloc/home/homepage_bloc.dart';
 
 import '../../../models/user_model.dart';
 import '../../../utils/exceptions/validation_exceptions.dart';
@@ -24,6 +25,8 @@ class AppBarBloc extends Bloc<AppBarEvent, AppBarState> {
         emit(LoadError(error: e.toString()));
       }
     });
+
+    on<InitialAppBarEvent>((event, emit) => emit(AppBarInitial()));
   }
 
   Future<UserModel?> _getProfileInfoFromDB() async {

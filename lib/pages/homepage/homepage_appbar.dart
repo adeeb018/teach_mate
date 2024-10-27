@@ -3,14 +3,26 @@ import 'dart:developer';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../bloc/home/appBar/app_bar_bloc.dart';
 import '../../bloc/home/homepage_bloc.dart';
 import '../../constants/widgets/scaffold_notification.dart';
+import '../../core/controllers/getx_controller.dart';
 import '../../models/user_model.dart';
 
 class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const HomePageAppBar({super.key});
+
+  static final HomePageAppBar _instance = HomePageAppBar._internal();
+
+  factory HomePageAppBar() {
+    return _instance;
+  }
+
+  HomePageAppBar._internal();
+
+  static HomePageAppBar get instance => _instance;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -21,38 +33,37 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   AppBar homePageAppBar(BuildContext context) {
-    UserModel? userData;
+    final GetXStoreController storeController = Get.find<GetXStoreController>();
     return AppBar(
       backgroundColor: Colors.blue,
       title: Center(child: const Text('Welcome')),
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 20.0),
-          child: BlocProvider(
-            create: (context) => AppBarBloc()..add(LoadProfile()),
-            child: BlocConsumer<AppBarBloc, AppBarState>(
-              builder: (context, state) {
-                // if (state is AppBarInitial && userData == null) {
-                //   context.read<AppBarBloc>().add(LoadProfile());
-                // }
-                return _dropdown(context, userData);
-              },
-              listener: (context, state) {
-                if (state is ProfileLoaded) {
-                  userData = state.userData;
-                } else if (state is LoadError) {
-                  ScaffoldSnackBar.of(context).show(state.error);
-                }
-              },
-            ),
+          child: BlocConsumer<AppBarBloc, AppBarState>(
+            builder: (context, state) {
+              log('$state');
+              if (state is AppBarInitial && storeController.userData == null) {
+                context.read<AppBarBloc>().add(LoadProfile());
+              }
+              return _dropdown(context, storeController.userData);
+            },
+            listener: (context, state) {
+              if (state is ProfileLoaded) {
+                storeController.userData = state.userData;
+              } else if (state is LoadError) {
+                ScaffoldSnackBar.of(context).show(state.error);
+              }
+              // log('userdata is ${storeController.userData}');
+            },
           ),
-
         ),
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: IconButton(
             onPressed: () {
               context.read<HomepageBloc>().add(SignOutEvent());
+              storeController.userData = null;
             },
             icon: const Icon(
               Icons.logout_rounded,

@@ -5,9 +5,9 @@ sealed class HomepageState {}
 
 final class HomepageInitial extends HomepageState {}
 
-final class LoadingState extends HomepageState {}
+final class LoadingHomeState extends HomepageState {}
 
-// final class AddStudentState extends HomepageState {}
+// final class ShowStudentFormState extends HomepageState {}
 
 final class SignOutSuccess extends HomepageState {}
 

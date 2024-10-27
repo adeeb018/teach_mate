@@ -17,7 +17,7 @@ class HomepageBloc extends Bloc<HomepageEvent, HomepageState> {
   HomepageBloc() : _signOutUseCase = SignOutUseCase(FirebaseAuth.instance), super(HomepageInitial()) {
 
     on<SignOutEvent>((event, emit) async {
-      emit(LoadingState());
+      emit(LoadingHomeState());
       try {
         // sign out
         await _signOutUseCase.call();
@@ -28,5 +28,9 @@ class HomepageBloc extends Bloc<HomepageEvent, HomepageState> {
         emit(SignOutError(error: e.toString()));
       }
     });
+
+    on<InitialEvent>((event, emit) => emit(HomepageInitial()));
+
+    // on<AddStudentEvent>((event, emit) => emit(ShowStudentFormState()));
   }
 }
