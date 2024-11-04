@@ -7,8 +7,6 @@ final class HomepageInitial extends HomepageState {}
 
 final class LoadingHomeState extends HomepageState {}
 
-// final class ShowStudentFormState extends HomepageState {}
-
 final class SignOutSuccess extends HomepageState {}
 
 final class SignOutError extends HomepageState {

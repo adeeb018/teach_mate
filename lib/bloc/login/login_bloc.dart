@@ -9,7 +9,6 @@ import 'package:school_management/core/usecases/sign_in_use_case.dart';
 
 import '../../core/services/auth/auth_validator.dart';
 import '../../core/usecases/sign_in_with_google.dart';
-import '../../models/user_model.dart';
 import '../../utils/exceptions/validation_exceptions.dart';
 
 part 'login_event.dart';

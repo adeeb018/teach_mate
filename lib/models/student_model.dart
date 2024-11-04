@@ -16,9 +16,15 @@ class Student {
   Map<String, Programme> programmes;
   Timestamp? joiningDate;
   Timestamp? disconDate;
-  String id = "";
+  late String _id;
 
-  setId({required String id})=>this.id = id;
+  // setId({required String id})=>this.id = id;
+
+  set id(String id) {
+    _id = id;
+  }
+
+  String get id => _id;
 
   Student({
     this.feeDue = 0.0,

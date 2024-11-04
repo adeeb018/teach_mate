@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
-import 'package:school_management/models/user_model.dart';
 import 'package:school_management/utils/exceptions/validation_exceptions.dart';
 
 import '../../core/usecases/sign_out_use_case.dart';
@@ -30,7 +29,5 @@ class HomepageBloc extends Bloc<HomepageEvent, HomepageState> {
     });
 
     on<InitialEvent>((event, emit) => emit(HomepageInitial()));
-
-    // on<AddStudentEvent>((event, emit) => emit(ShowStudentFormState()));
   }
 }

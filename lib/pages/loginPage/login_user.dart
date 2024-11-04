@@ -49,7 +49,6 @@ class LoginScreen extends StatelessWidget {
               context.read<AppBarBloc>().add(InitialAppBarEvent());
 
               context.go('/homepage');
-              // Navigator.pushReplacement(context, homePageRoute());
             }
           },
         ),
@@ -100,8 +99,6 @@ class LoginUser extends StatelessWidget {
           const SizedBox(height: 20),
           ElevatedButton(
               onPressed: () {
-                // go to registration page
-                // Navigator.pushReplacement(context, registerUserPageRoute());
                 context.push('/register');
               },
               child: const Text(StringConstants.registerText))

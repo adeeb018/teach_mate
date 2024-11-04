@@ -7,6 +7,7 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:go_router/go_router.dart';
+import 'package:school_management/bloc/home/body/body_bloc.dart';
 import 'package:school_management/constants/constant_strings.dart';
 import 'package:school_management/pages/homepage/homepage.dart';
 import 'package:school_management/pages/loginPage/login_user.dart';
@@ -15,6 +16,7 @@ import 'package:school_management/utils/route/routes.dart';
 
 import 'bloc/home/appBar/app_bar_bloc.dart';
 import 'bloc/home/homepage_bloc.dart';
+import 'bloc/student_edt/student_edit_bloc.dart';
 import 'core/controllers/getx_controller.dart';
 
 
@@ -31,7 +33,8 @@ void main() async {
         projectId: dotenv.env['FIREBASE_PROJECT_ID']!,
         authDomain: dotenv.env['FIREBASE_AUTH_DOMAIN']!,
       ));
-
+  // Initialize your systems locale. If not, users might see AM/PM even when they configured their system to use 24h format.
+  // await findSystemLocale();
   // disable browser back button
   // setUrlStrategy(null);
   runApp(MyApp());
@@ -53,6 +56,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<AppBarBloc>(
           create: (context) => AppBarBloc(),
+        ),
+        BlocProvider<BodyBloc>(
+          create: (context) => BodyBloc(),
+        ),
+        BlocProvider<StudentEditBloc>(
+          create: (context) => StudentEditBloc(),
         ),
         // Add more providers as needed
       ],

@@ -7,8 +7,8 @@ import 'package:school_management/bloc/home/homepage_bloc.dart';
 import 'package:school_management/constants/constant_strings.dart';
 import 'package:school_management/constants/widgets/loading_stack_widget.dart';
 import 'package:school_management/constants/widgets/scaffold_notification.dart';
-import 'package:school_management/models/user_model.dart';
 import 'package:school_management/pages/homepage/add_new_student_form.dart';
+import 'package:school_management/pages/homepage/search_student.dart';
 
 import '../../bloc/home/appBar/app_bar_bloc.dart';
 import 'homepage_appbar.dart';
@@ -39,8 +39,6 @@ class HomePage extends StatelessWidget {
           if (state is SignOutError) {
             ScaffoldSnackBar.of(context).show(state.error);
           } else if (state is SignOutSuccess) {
-            // // on sign-out we need to set Appbar bloc to initial state
-            // context.read<AppBarBloc>().add(InitialAppBarEvent());
             context.go('/');
           }
         },
@@ -50,36 +48,57 @@ class HomePage extends StatelessWidget {
 }
 
 class HomePageWidget extends StatelessWidget {
-
   HomePageWidget({super.key, required});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => BodyBloc(),
-      child: BlocConsumer<BodyBloc, BodyState>(
-        listener: (context, state) {
-          if (state is ShowStudentFormState) {
-            context.go('/homepage/add-student');
-          }
-        },
-        builder: (context, state) {
-          return Scaffold(
-            appBar: HomePageAppBar.instance,
-            body: Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  context.read<BodyBloc>().add(AddStudentEvent());
-                },
-                child: const Text(
-                  StringConstants.addNewStudent,
-                  style: TextStyle(color: Colors.black),
+    return BlocConsumer<BodyBloc, BodyState>(
+      listener: (context, state) {
+        if (state is ShowStudentFormState) {
+          context.go('/homepage/add-student');
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          appBar: HomePageAppBar.instance,
+          body: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // SearchBar(
+                //     constraints: BoxConstraints(
+                //         maxWidth: MediaQuery.of(context).size.width / 2,
+                //         minHeight: 40),
+                //     hintText: 'Search student with name',
+                //     trailing: [
+                //       IconButton(
+                //         icon: Icon(Icons.search_rounded),
+                //         onPressed: () {
+                //
+                //         },
+                //       ),
+                //     ]),
+                ElevatedButton(onPressed: () {
+                  context.go('/homepage/student-search');
+                }, child: Text('Search student')),
+                SizedBox(
+                  height: 20,
                 ),
-              ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserSelect(),));
+                    context.read<BodyBloc>().add(AddStudentEvent());
+                  },
+                  child: const Text(
+                    StringConstants.addNewStudent,
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

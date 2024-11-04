@@ -33,7 +33,9 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   AppBar homePageAppBar(BuildContext context) {
+
     final GetXStoreController storeController = Get.find<GetXStoreController>();
+
     return AppBar(
       backgroundColor: Colors.blue,
       title: Center(child: const Text('Welcome')),
