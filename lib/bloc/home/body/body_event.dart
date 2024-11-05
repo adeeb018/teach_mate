@@ -16,3 +16,9 @@ final class SubmitStudentEvent extends BodyEvent {
 
   SubmitStudentEvent({required this.formKey});
 }
+
+final class SearchStudentEvent extends BodyEvent {
+  final String searchText;
+
+  SearchStudentEvent({required this.searchText});
+}

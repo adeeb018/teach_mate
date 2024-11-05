@@ -33,7 +33,51 @@ class BodyBloc extends Bloc<BodyEvent, BodyState> {
         emit(RetrieveStudentFailed(error: e.toString()));
       }
     });
+    on<SearchStudentEvent>((event, emit) async {
+        if (event.searchText.isEmpty) {
+          emit(SearchStudentNoResults());
+        }  else {
+          emit(SearchStudentLoading());
+          try {
+            final uid = FirebaseAuth.instance.currentUser?.uid ?? '';
+            final querySnapshot = await FirebaseFirestore.instance
+                .collection('users')
+                .doc(uid)
+                .collection('students')
+                .where('name', isGreaterThanOrEqualTo: event.searchText)
+                .where('name', isLessThanOrEqualTo: '${event.searchText}\uf8ff}')
+                .get();
+
+            if (querySnapshot.docs.isEmpty) {
+              emit(SearchStudentNoResults());
+            } else {
+              final students = querySnapshot.docs.map((doc) => doc.data()).toList();
+              emit(SearchStudentLoaded(students: students));
+            }
+          } catch (e) {
+            emit(SearchStudentError(error: e.toString()));
+          }
+        }
+    });
   }
+
+  // // Function to search students by name
+  // Stream<QuerySnapshot> searchStudents(String searchText) {
+  //   final uid = getCurrentUserId();
+  //   final list = FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(uid)
+  //       .collection('students').where(
+  //       'name', isGreaterThanOrEqualTo: searchText)
+  //       .where('name', isLessThanOrEqualTo: '$searchText\uf8ff')
+  //       .snapshots();
+  //   return list;
+  // }
+  //
+  // // Function to get current user’s UID for querying
+  // String getCurrentUserId() {
+  //   return FirebaseAuth.instance.currentUser?.uid ?? '';
+  // }
 
   Future<FutureOr<void>>_mapSubmitStudentEventToState(SubmitStudentEvent event, Emitter<BodyState> emit) async {
     try {

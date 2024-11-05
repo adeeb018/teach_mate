@@ -3,6 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:school_management/bloc/home/body/body_bloc.dart';
+import 'package:school_management/constants/widgets/scaffold_notification.dart';
 
 class StudentSearch extends StatefulWidget {
   @override
@@ -24,7 +27,8 @@ class _StudentSearchState extends State<StudentSearch> {
     final list = FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
-        .collection('students').where('name', isGreaterThanOrEqualTo: searchText)
+        .collection('students').where(
+        'name', isGreaterThanOrEqualTo: searchText)
         .where('name', isLessThanOrEqualTo: '$searchText\uf8ff')
         .snapshots();
     return list;
@@ -47,34 +51,39 @@ class _StudentSearchState extends State<StudentSearch> {
                 border: OutlineInputBorder(),
               ),
               onChanged: (value) {
-                setState(() {
-                  log(value);
-                  _searchText = value;
-                });
+                // setState(() {
+                //   log(value);
+                //   _searchText = value;
+                // });
+                context.read<BodyBloc>().add(
+                    SearchStudentEvent(searchText: value));
               },
             ),
             const SizedBox(height: 10),
             Expanded(
-              child: StreamBuilder<QuerySnapshot>(
-                stream: _searchText.isEmpty
-                    ? null
-                    : searchStudents(_searchText),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
+              child: BlocConsumer<BodyBloc, BodyState>(
+                listener: (context, state) {
+                  if (state is SearchStudentError) {
+                    ScaffoldSnackBar.of(context).show(state.error);
                   }
-                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return const Center(child: Text('No students found'));
-                  }
-                  return ListView(
-                    children: snapshot.data!.docs.map((doc) {
-                      final data = doc.data() as Map<String, dynamic>;
+                },
+                builder: (context, state) {
+                  if (state is SearchStudentLoading) {
+                    return Container(alignment:Alignment.center,child: CircularProgressIndicator());
+                  } else if (state is SearchStudentNoResults) {
+                    return Center(child: Text('No students found'),);
+                  } else if (state is SearchStudentLoaded) {
+                    return ListView(
+                        children: state.students.map((data) {
                       return ListTile(
                         title: Text(data['name'] ?? 'Unnamed'),
                         subtitle: Text(data['contact'] ?? 'No contact'),
                       );
-                    }).toList(),
-                  );
+                    }).toList());
+                  }
+                  else {
+                    return const Center(child: Text('Start typing to search'));
+                  }
                 },
               ),
             ),

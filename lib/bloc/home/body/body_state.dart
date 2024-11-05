@@ -33,4 +33,20 @@ final class RetrieveStudentFailed extends BodyState {
   RetrieveStudentFailed({required this.error});
 }
 
+final class SearchStudentLoading extends BodyState {}
 
+final class SearchStudentNoResults extends BodyState {}
+
+final class SearchStudentError extends BodyState {
+  final String error;
+
+  SearchStudentError({required this.error});
+}
+
+class SearchStudentLoaded extends BodyState {
+  final List<Map<String, dynamic>> students;
+
+  SearchStudentLoaded({required this.students});
+
+  List<Object> get props => [students];
+}
