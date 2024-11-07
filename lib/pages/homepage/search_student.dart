@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:school_management/bloc/home/body/body_bloc.dart';
 import 'package:school_management/constants/widgets/scaffold_notification.dart';
 
@@ -76,6 +77,14 @@ class _StudentSearchState extends State<StudentSearch> {
                     return ListView(
                         children: state.students.map((data) {
                       return ListTile(
+                        onTap: () {
+                          // go to created student form with this student data
+                          // debugPrint('id passed is${data['id']}');
+                          context.go(Uri(
+                            path: '/homepage/add-student/student-details',
+                            queryParameters: {'id': data['id']},
+                          ).toString());
+                        },
                         title: Text(data['name'] ?? 'Unnamed'),
                         subtitle: Text(data['contact'] ?? 'No contact'),
                       );

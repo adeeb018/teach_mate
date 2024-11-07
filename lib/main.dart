@@ -23,20 +23,26 @@ import 'core/controllers/getx_controller.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await dotenv.load(fileName: 'assets/.env');
+  // await dotenv.load(fileName: 'assets/.env');
 
   await Firebase.initializeApp(
-      options: FirebaseOptions(
-        apiKey: dotenv.env['FIREBASE_API_KEY']!,
-        appId: dotenv.env['FIREBASE_APP_ID']!,
-        messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID']!,
-        projectId: dotenv.env['FIREBASE_PROJECT_ID']!,
-        authDomain: dotenv.env['FIREBASE_AUTH_DOMAIN']!,
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyA5S1y8cuOS9-3YbPl8fwB-lEobv5OP4ME",
+        authDomain: "schoolmanagement-5dfac.firebaseapp.com",
+        projectId: "schoolmanagement-5dfac",
+        storageBucket: "schoolmanagement-5dfac.appspot.com",
+        messagingSenderId: "401058530115",
+        appId: "1:401058530115:web:39d83590b5b7124b86e5f6",
       ));
-  // Initialize your systems locale. If not, users might see AM/PM even when they configured their system to use 24h format.
-  // await findSystemLocale();
-  // disable browser back button
-  // setUrlStrategy(null);
+  // await Firebase.initializeApp(
+  //     options: FirebaseOptions(
+  //       apiKey: dotenv.env['FIREBASE_API_KEY']!,
+  //       appId: dotenv.env['FIREBASE_APP_ID']!,
+  //       messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID']!,
+  //       projectId: dotenv.env['FIREBASE_PROJECT_ID']!,
+  //       authDomain: dotenv.env['FIREBASE_AUTH_DOMAIN']!,
+  //     ));
+
   runApp(MyApp());
 }
 

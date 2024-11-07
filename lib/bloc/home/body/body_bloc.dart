@@ -51,7 +51,15 @@ class BodyBloc extends Bloc<BodyEvent, BodyState> {
             if (querySnapshot.docs.isEmpty) {
               emit(SearchStudentNoResults());
             } else {
-              final students = querySnapshot.docs.map((doc) => doc.data()).toList();
+              // List to hold results with both document ID and data
+              final students = querySnapshot.docs.map((doc) {
+                return {
+                  'id': doc.id,  // Document ID
+                  ...doc.data(), // Document data
+                };
+              }).toList();
+
+              // final students = querySnapshot.docs.map((doc) => doc.data()).toList();
               emit(SearchStudentLoaded(students: students));
             }
           } catch (e) {

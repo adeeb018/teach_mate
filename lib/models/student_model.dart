@@ -77,7 +77,7 @@ class Student {
     "remarks": remarks,
     "joiningDate": joiningDate,
     "streamId": streamId,
-    "disconDate": disconDate
+    "disconDate": disconDate,
   };
 
   updatePaymentInfo() {

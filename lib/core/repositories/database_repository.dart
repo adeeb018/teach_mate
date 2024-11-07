@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,10 +33,6 @@ class DataBaseRepository {
       final studentRef = userDoc.collection('students').doc(student.id);
 
       try {
-        // student.setId(id: studentId);
-        // student.toJson().forEach((key, value) {
-        //   debugPrint("$key , $value");
-        // });
         await studentRef.set(student.toJson());
       } catch (e) {
         debugPrint(e.toString());
@@ -55,10 +49,6 @@ class DataBaseRepository {
       final studentRef = userDoc.collection('students').doc(studentId);
 
       try {
-        // student.setId(id: studentId);
-        // student.toJson().forEach((key, value) {
-        //   debugPrint("$key , $value");
-        // });
         final studentSnapshot = await studentRef.get();
         if(studentSnapshot.exists) {
           final student = studentSnapshot.data();
